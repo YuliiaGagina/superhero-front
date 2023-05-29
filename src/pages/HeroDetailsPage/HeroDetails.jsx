@@ -38,23 +38,20 @@ const HeroDetails = () => {
 
   const handleSubmitImages = async (event) => {
     event.preventDefault();
-    try {
-      const formData = new FormData();
-      for (let i = 0; i < images.length; i++) {
-        formData.append("images", images[i]);
-      }
-      const imagesArray = Array.from(images);
-      imagesArray.forEach((image) => {
-        formData.append("images", image);
-      });
-      addImageToHero(_id, formData).then(({ data }) => {
-        window.location.reload();
-        setImages([]);
-        return data;
-      });
-    } catch (error) {
-      console.error("Error:", error);
+
+    const formData = new FormData();
+    for (let i = 0; i < images.length; i++) {
+      formData.append("images", images[i]);
     }
+
+    addImageToHero(_id, formData)
+      .then(({ data }) => {
+        window.location.reload();
+
+        return data;
+      })
+      .catch((err) => err.message);
+    setImages([]);
   };
 
   const handledeleteImage = async (_id, imageId) => {
@@ -99,7 +96,7 @@ const HeroDetails = () => {
             {hero.images.map((image, idx) => (
               <>
                 <img
-                  key={image._id}
+                  key={idx + 1}
                   width="600"
                   src={
                     image.includes("https")

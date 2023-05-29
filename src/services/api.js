@@ -51,6 +51,9 @@ export const deleteHeroImg = async (_id, imageId) => {
 };
 
 export const addImageToHero = async (_id, formData) => {
-  const { data } = await axios.post(`superheroes/${_id}/avatars`, formData);
+  const { data } = await axios.post(
+    `superheroes/${_id}/avatars?images`,
+    formData
+  );
   return data;
 };

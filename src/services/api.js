@@ -1,8 +1,8 @@
 import axios from "axios";
-axios.defaults.staticUrl = "http://localhost:8800/";
+axios.defaults.staticUrl = "https://superheroes.herokuapp.com/";
 axios.defaults.baseURL = axios.defaults.staticUrl + "api";
 
-// https://salty-mountain-49103.herokuapp.com/
+
 
 export const getSuperheroes = async (page) => {
   const { data } = await axios.get(`/superheroes?page=${page}`);

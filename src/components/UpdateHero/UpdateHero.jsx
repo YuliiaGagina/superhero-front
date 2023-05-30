@@ -80,6 +80,7 @@ const UpdateHero = ({ heroImages }) => {
               type="text"
               value={nickname}
               onChange={handleNicknameChange}
+              required
             />
           </Label>
         </Wrapper>
@@ -92,6 +93,7 @@ const UpdateHero = ({ heroImages }) => {
               type="text"
               value={real_name}
               onChange={handleRealNameChange}
+              required
             />
           </Label>
         </Wrapper>
@@ -103,6 +105,7 @@ const UpdateHero = ({ heroImages }) => {
             <Text
               value={origin_description}
               onChange={handleOriginDescriptionChange}
+              required
             ></Text>
           </Label>
         </Wrapper>
@@ -111,7 +114,11 @@ const UpdateHero = ({ heroImages }) => {
           {" "}
           <Label>
             Superpowers:
-            <Text value={superpowers} onChange={handleSuperpowersChange}></Text>
+            <Text
+              value={superpowers}
+              onChange={handleSuperpowersChange}
+              required
+            ></Text>
           </Label>
         </Wrapper>
 
@@ -123,6 +130,7 @@ const UpdateHero = ({ heroImages }) => {
               type="text"
               value={catch_phrase}
               onChange={handleCatchPhraseChange}
+              required
             />
           </Label>
         </Wrapper>
@@ -135,6 +143,7 @@ const UpdateHero = ({ heroImages }) => {
               type="file"
               multiple
               onChange={(e) => setImages(e.target.files)}
+              required
             />
           </Label>
         </Wrapper>

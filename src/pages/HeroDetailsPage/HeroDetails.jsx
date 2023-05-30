@@ -25,7 +25,7 @@ import { Loader } from "../../components/Loader/Loader";
 
 const HeroDetails = () => {
   const [hero, setHero] = useState(null);
-  // const [isDeleting, setIsDeleting] = useState(false);
+  const [deleted, setDeleted] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [downloading, setDownloading] = useState(false);
@@ -69,8 +69,8 @@ const HeroDetails = () => {
       .then(({ data }) => {
         setDownloading(false);
         setSelectedImage(null);
-
-        window.location.reload();
+        setDeleted(true);
+        // window.location.reload();
         return data;
       })
       .catch((err) => {
@@ -90,70 +90,78 @@ const HeroDetails = () => {
     <Section>
       <ButtonLink to={goBackLink}>Go back</ButtonLink>
       {downloading && <Loader />}
-      {hero && (
-        <Wrapper>
-          <ImageWrap>
-            {hero.images.map((image, idx) => (
-              <>
-                <img
-                  key={idx + 1}
-                  width="600"
-                  src={
-                    image.includes("https")
-                      ? image
-                      : `${staticFilesUrl}${image}`
-                  }
-                  alt="avatar"
-                />
-                <SmallButton onClick={() => handledeleteImage(_id, idx)}>
-                  delete img
-                </SmallButton>
-              </>
-            ))}
-            <form onSubmit={handleSubmitImages}>
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={(e) => setImages(e.target.files)}
-              />
-              <button disabled={!selectedImage || isUploading}>
-                {isUploading ? "Uploading..." : "Upload Image"}
-              </button>
-              {selectedImage && (
-                <div>
-                  <img
-                    src={URL.createObjectURL(selectedImage)}
-                    alt="Selected"
+      {!deleted ? (
+        <>
+          {hero && (
+            <Wrapper>
+              <ImageWrap>
+                {hero.images.map((image, idx) => (
+                  <>
+                    <img
+                      key={idx + 1}
+                      width="600"
+                      src={
+                        image.includes("https")
+                          ? image
+                          : `${staticFilesUrl}${image}`
+                      }
+                      alt="avatar"
+                    />
+                    <SmallButton onClick={() => handledeleteImage(_id, idx)}>
+                      delete img
+                    </SmallButton>
+                  </>
+                ))}
+                <form onSubmit={handleSubmitImages}>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={(e) => setImages(e.target.files)}
                   />
-                </div>
-              )}
-              <Button type="submit">save</Button>
-            </form>
-          </ImageWrap>
-          <TextContainer>
-            <h1>{hero.nickname}</h1>
+                  <button disabled={!selectedImage || isUploading}>
+                    {isUploading ? "Uploading..." : "Upload Image"}
+                  </button>
+                  {selectedImage && (
+                    <div>
+                      <img
+                        src={URL.createObjectURL(selectedImage)}
+                        alt="Selected"
+                      />
+                    </div>
+                  )}
+                  <Button type="submit">save</Button>
+                </form>
+              </ImageWrap>
+              <TextContainer>
+                <h1>{hero.nickname}</h1>
 
-            <p>
-              {" "}
-              <b>Main Phrase: </b> {hero.catch_phrase}
-            </p>
-            <p>
-              {" "}
-              <b>Real name: </b> {hero.real_name}
-            </p>
-            <p>
-              {" "}
-              <b> Description: </b> {hero.origin_description}
-            </p>
-            <Text>
-              {" "}
-              <b>Power: </b> {hero.superpowers}
-            </Text>
-            <Button onClick={() => handleDeleteHero(_id)}>delete hero</Button>
-          </TextContainer>
-          <UpdateHero heroImages={hero.images} />
-        </Wrapper>
+                <p>
+                  {" "}
+                  <b>Main Phrase: </b> {hero.catch_phrase}
+                </p>
+                <p>
+                  {" "}
+                  <b>Real name: </b> {hero.real_name}
+                </p>
+                <p>
+                  {" "}
+                  <b> Description: </b> {hero.origin_description}
+                </p>
+                <Text>
+                  {" "}
+                  <b>Power: </b> {hero.superpowers}
+                </Text>
+                <Button onClick={() => handleDeleteHero(_id)}>
+                  delete hero
+                </Button>
+              </TextContainer>
+              <UpdateHero heroImages={hero.images} />
+            </Wrapper>
+          )}
+        </>
+      ) : (
+        <p>hero removed successfully</p>
       )}
 
       <Outlet />

@@ -45,9 +45,6 @@ const UpdateHero = ({ heroImages }) => {
       formData.append("superpowers", superpowers);
       formData.append("catch_phrase", catch_phrase);
 
-      for (let i = 0; i < images.length; i++) {
-        formData.append("images", images[i]);
-      }
       const imagesArray = Array.from(images);
       imagesArray.forEach((image) => {
         formData.append("images", image);
